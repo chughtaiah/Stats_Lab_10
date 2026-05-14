@@ -1,69 +1,111 @@
 # Advanced AI Statistics Lab
-## Sparse Joint PMF, Conditional PMF, Covariance, and Correlation
+## Jointly Gaussian Random Variables
 
-This lab focuses on two-variable probability concepts:
+This lab focuses on jointly Gaussian random variables.
 
-- Joint PMF
-- Marginal PMFs
-- Conditional PMFs
-- Probability over a set
-- Expectation
-- Covariance
-- Correlation
-- Independence
-- Variance identity
+Topics:
+- Bivariate Gaussian joint PDF
+- Marginal Gaussian PDFs
+- Covariance matrix
+- Correlation coefficient
+- Independence for jointly Gaussian variables
+- Simulation-based verification
 
 ---
 
-# Question 1 — Sparse 4 by 4 Joint PMF
+# Background
 
-You are given the following joint PMF:
+A pair (X,Y) is jointly Gaussian if its joint PDF is:
 
-|      | y=0  | y=1  | y=2  | y=3  |
-|------|------|------|------|------|
-| x=0  | 0.10 | 0.05 | 0.00 | 0.00 |
-| x=1  | 0.15 | 0.20 | 0.05 | 0.00 |
-| x=2  | 0.00 | 0.10 | 0.15 | 0.05 |
-| x=3  | 0.00 | 0.00 | 0.05 | 0.10 |
+f_XY(x,y) =
+1 / (2*pi*sigma_X*sigma_Y*sqrt(1-rho^2))
+*
+exp( - Q(x,y) / (2*(1-rho^2)) )
 
-Tasks:
+where
 
-1. Implement the joint PMF.
-2. Compute marginal PMFs PX(x) and PY(y).
-3. Compute conditional PMF P(X=x given Y=y).
-4. Return the full conditional distribution of X given Y=y.
-5. Compute P(X+Y > 3).
-6. Check whether X and Y are independent.
+Q(x,y) =
+((x-mu_X)^2 / sigma_X^2)
+- 2*rho*((x-mu_X)*(y-mu_Y))/(sigma_X*sigma_Y)
++ ((y-mu_Y)^2 / sigma_Y^2)
+
+The parameters are:
+
+mu_X, mu_Y = means
+
+sigma_X, sigma_Y = standard deviations
+
+rho = correlation coefficient
+
+For jointly Gaussian variables:
+
+rho = 0 implies X and Y are independent.
+
+This is a special Gaussian property.
 
 ---
 
-# Question 2 — Expectation, Covariance, and Correlation
+# Question 1 — Joint Gaussian PDF and Marginals
 
-Using the same joint PMF table:
+You are given:
+
+mu_X = 1
+mu_Y = -2
+sigma_X = 2
+sigma_Y = 3
+rho = 0.6
 
 Tasks:
 
-1. Compute E[X].
-2. Compute E[Y].
-3. Compute E[XY].
-4. Compute Var(X).
-5. Compute Var(Y).
-6. Compute Cov(X,Y).
-7. Compute the correlation coefficient:
+1. Implement the joint Gaussian PDF.
+2. Implement the marginal PDF of X.
+3. Implement the marginal PDF of Y.
+4. Implement the covariance matrix:
 
-rho_XY = Cov(X,Y) / sqrt( Var(X) * Var(Y) )
+[[sigma_X^2, rho*sigma_X*sigma_Y],
+ [rho*sigma_X*sigma_Y, sigma_Y^2]]
 
-8. Compute Var(X+Y).
+5. Numerically estimate the double integral of the joint PDF over the rectangle:
 
-9. Verify:
+mu_X - 4*sigma_X <= x <= mu_X + 4*sigma_X
 
-Var(X+Y) = Var(X) + Var(Y) + 2*Cov(X,Y)
+mu_Y - 4*sigma_Y <= y <= mu_Y + 4*sigma_Y
+
+---
+
+# Question 2 — Independence and Simulation
+
+Use the same Gaussian parameters.
+
+Tasks:
+
+1. Generate samples from a jointly Gaussian distribution.
+2. Estimate sample means.
+3. Estimate sample covariance matrix.
+4. Estimate sample correlation coefficient.
+5. Check whether the pair is independent when rho = 0.
+6. Check whether the pair is independent when rho is nonzero.
+7. Verify numerically that rho = 0 gives approximately zero sample covariance.
+8. Verify numerically that nonzero rho gives nonzero sample covariance.
+
+---
+
+# Rules
+
+Students must implement all functions in:
+
+AI_stats_lab.py
+
+Do not modify the test file.
 
 ---
 
 # Run Locally
 
-Install requirements:
+Install:
 
-```bash
 pip install numpy pytest
+
+Run:
+
+pytest
