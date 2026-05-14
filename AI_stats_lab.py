@@ -1,159 +1,131 @@
-
----
-
-## `AI_stats_lab.py`
-
-```python
 import numpy as np
 
 
 # -------------------------------------------------
-# Sparse 4 by 4 Joint PMF
+# Question 1: Joint Gaussian PDF and Marginals
 # -------------------------------------------------
 
-def joint_pmf(x, y):
+def joint_gaussian_pdf(x, y, mu_x=1, mu_y=-2, sigma_x=2, sigma_y=3, rho=0.6):
     """
-    Joint PMF table:
+    Return the bivariate Gaussian PDF f_XY(x,y).
 
-             y=0   y=1   y=2   y=3
-    x=0      0.10  0.05  0.00  0.00
-    x=1      0.15  0.20  0.05  0.00
-    x=2      0.00  0.10  0.15  0.05
-    x=3      0.00  0.00  0.05  0.10
-    """
-    pass
+    Use the formula:
 
-
-def marginal_px(x):
-    """
-    Compute PX(x) by summing joint_pmf(x, y) over y = 0,1,2,3.
+    f_XY(x,y) =
+    1 / (2*pi*sigma_x*sigma_y*sqrt(1-rho^2))
+    *
+    exp( -Q / (2*(1-rho^2)) )
     """
     pass
 
 
-def marginal_py(y):
+def marginal_pdf_x(x, mu_x=1, sigma_x=2):
     """
-    Compute PY(y) by summing joint_pmf(x, y) over x = 0,1,2,3.
-    """
-    pass
-
-
-def conditional_pmf_x_given_y(x, y):
-    """
-    Compute P(X=x given Y=y).
-
-    P(X=x given Y=y) = joint_pmf(x,y) / PY(y)
-
-    If PY(y) is zero, return 0.
+    Return marginal Gaussian PDF of X.
     """
     pass
 
 
-def conditional_distribution_x_given_y(y):
+def marginal_pdf_y(y, mu_y=-2, sigma_y=3):
     """
-    Return conditional distribution of X given Y=y
-    as dictionary:
-
-    {
-        0: P(X=0 given Y=y),
-        1: P(X=1 given Y=y),
-        2: P(X=2 given Y=y),
-        3: P(X=3 given Y=y)
-    }
+    Return marginal Gaussian PDF of Y.
     """
     pass
 
 
-def probability_sum_greater_than_3():
+def covariance_matrix(sigma_x=2, sigma_y=3, rho=0.6):
     """
-    Compute P(X + Y > 3).
+    Return covariance matrix:
+
+    [[sigma_x^2, rho*sigma_x*sigma_y],
+     [rho*sigma_x*sigma_y, sigma_y^2]]
     """
     pass
 
 
-def independence_check():
+def joint_pdf_grid_integral(mu_x=1, mu_y=-2, sigma_x=2, sigma_y=3, rho=0.6, n=250):
     """
-    Return True if X and Y are independent.
+    Numerically approximate integral of joint Gaussian PDF
+    over the rectangle:
 
-    X and Y are independent if:
+    [mu_x - 4*sigma_x, mu_x + 4*sigma_x]
+    x
+    [mu_y - 4*sigma_y, mu_y + 4*sigma_y]
 
-    joint_pmf(x,y) = PX(x) * PY(y)
-
-    for every x and y.
+    Use a rectangular grid or trapezoidal numerical integration.
     """
     pass
 
 
 # -------------------------------------------------
-# Expectation, Covariance, and Correlation
+# Question 2: Simulation and Independence
 # -------------------------------------------------
 
-def expected_x():
+def generate_joint_gaussian_samples(
+    n=100000,
+    mu_x=1,
+    mu_y=-2,
+    sigma_x=2,
+    sigma_y=3,
+    rho=0.6,
+    seed=0
+):
     """
-    Compute E[X].
-    """
-    pass
+    Generate n samples from a jointly Gaussian distribution.
 
+    Return two arrays:
+    x_samples, y_samples
 
-def expected_y():
-    """
-    Compute E[Y].
-    """
-    pass
-
-
-def expected_xy():
-    """
-    Compute E[XY].
-    """
-    pass
-
-
-def variance_x():
-    """
-    Compute Var(X).
+    Hint:
+    Use np.random.multivariate_normal.
     """
     pass
 
 
-def variance_y():
+def sample_means(x_samples, y_samples):
     """
-    Compute Var(Y).
-    """
-    pass
-
-
-def covariance_xy():
-    """
-    Compute Cov(X,Y).
-
-    Cov(X,Y) = E[XY] - E[X]*E[Y]
+    Return sample means of X and Y.
     """
     pass
 
 
-def correlation_xy():
+def sample_covariance_matrix(x_samples, y_samples):
     """
-    Compute correlation coefficient:
+    Return 2 by 2 sample covariance matrix.
 
-    rho_XY = Cov(X,Y) / sqrt( Var(X) * Var(Y) )
-    """
-    pass
-
-
-def variance_sum():
-    """
-    Compute Var(X+Y).
+    Use denominator n-1.
     """
     pass
 
 
-def variance_identity_check():
+def sample_correlation(x_samples, y_samples):
     """
-    Verify:
+    Return sample correlation coefficient.
+    """
+    pass
 
-    Var(X+Y) = Var(X) + Var(Y) + 2*Cov(X,Y)
 
-    Return True if the identity holds, else False.
+def gaussian_independence_check(rho):
+    """
+    For jointly Gaussian variables:
+    return True if rho is zero, otherwise False.
+    """
+    pass
+
+
+def zero_rho_covariance_check(n=100000):
+    """
+    Generate samples with rho=0 and check that
+    sample covariance is approximately zero.
+    Return True or False.
+    """
+    pass
+
+
+def nonzero_rho_covariance_check(n=100000):
+    """
+    Generate samples with rho=0.6 and check that
+    sample covariance is close to rho*sigma_x*sigma_y.
+    Return True or False.
     """
     pass
