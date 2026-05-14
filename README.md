@@ -71,8 +71,6 @@ Tasks:
 
        mu_Y - 4*sigma_Y <= y <= mu_Y + 4*sigma_Y
 
-   The value should be close to `1`.
-
 ---
 
 ## Question 2 — Independence and Simulation
